@@ -726,8 +726,9 @@
 						<label for="adrenalineRush2Checkbox">Adrenaline Rush 2 (+30% HP)</label>
 					</div>
 					<div style="background-color:#C22D2D;" class="perk-item">
-						<input type="checkbox" id="solo3Checkbox">
-						<label for="solo3Checkbox">Solo 3 (+10% HP if Adrenaline Rush 2 inactive)</label>
+						<label for="customHPPercentInput">Custom HP % Bonus:</label>
+						<input type="number" id="customHPPercentInput" min="0" max="999" value="0" step="1" style="width: 60px; padding: 5px; border-radius: 3px; border: 1px solid #00ffff; background-color: #222; color: white; text-align: center; margin-left: 5px;">
+						<label style="margin-left: 5px;">%</label>
 					</div>
 					<div style="background-color:#C22D2D;" class="perk-item">
 						<label for="customHPInput">Custom HP Bonus:</label>
@@ -760,35 +761,32 @@
 					</div>
 					
 					<div style="display: flex; flex-direction: column; gap: 5px;">
-						<div style="background-color:#C22D2D;" class="perk-item">
-							<label for="customHPPercentInput">Custom HP % Bonus:</label>
-							<input type="number" id="customHPPercentInput" min="0" max="999" value="0" step="1" style="width: 60px; padding: 5px; border-radius: 3px; border: 1px solid #00ffff; background-color: #222; color: white; text-align: center; margin-left: 5px;">
-							<label style="margin-left: 5px;">%</label>
-						</div>
 						<div style="background-color:#A8822C;" class="level-selector">
 							<label for="levelInput">Level:</label>
 							<input type="number" id="levelInput" min="0" max="60" value="0">
-							<label>(+3 capacity per level)</label>
+							<label>(+3 capacity, +5 HP per level)</label>
 						</div>
-						<div class="toggle-perk-item">
+						<div style="background-color:#7703fc;" class="toggle-perk-item">
 							<input type="checkbox" id="skeletonToggle">
-							<label for="skeletonToggle">License to Chrome (+1 Skeleton Slot)</label>
+							<label for="skeletonToggle">License to Chrome (Boosted Skeleton Stats)</label>
 						</div>
-						<div class="toggle-perk-item">
-							<input type="checkbox" id="handToggle">
-							<label for="handToggle">Ambidextrous (+1 Hand Slot)</label>
-						</div>
-						<div class="toggle-perk-item">
+						<div style="background-color:#7703fc;" class="toggle-perk-item">
 							<input type="checkbox" id="moddedSlotsToggle">
 							<label for="moddedSlotsToggle">Show Modded Slots</label>
 						</div>
-						<div class="toggle-perk-item" id="resetPageBtn" style="background-color:red; cursor:pointer; justify-content:center;">
-							<a href="CyberwarePlannerV3.html"
-							   id="resetPageBtn"
-							   class="toggle-perk-item"
-							   onclick="return confirm('Reset the build? All changes will be lost.')">
-								Reset Build
-							</a>
+						<div
+							class="toggle-perk-item"
+							id="resetBuildBtn"
+							style="background-color:red; cursor:pointer; justify-content:center;"
+						>
+							Reset Build
+							<script>
+							document.getElementById('resetBuildBtn').addEventListener('click', () => {
+								if (confirm('Reset the build? All changes will be lost.')) {
+									resetBuildState();
+								}
+							});
+							</script>
 						</div>
 					</div>
 				</div>
@@ -931,7 +929,7 @@ const cyberwareData = {
 		{name: "Scar Coalescer", cost:20 , armor:46 , ram:0, hp: 0.5, hpMulti: 0, icon: "NoPainNoGain.webp"},
 		{name: "Para Bellum", cost:25 , armor:150 , ram:0, hp: 0.5, hpMulti: 0, icon: "T1000.webp"},
 		{name: "Universal Booster", cost:25 , armor:186 , ram:0, hp: 0, hpMulti: 0, icon: "EnhancedBloodVessels.webp"},
-		{name: "Epimorphic Skeleton", cost:40 , armor:186 , ram:0, hp: 0.5, hpMulti: 0.15, icon: "Endoskeleton.webp"},
+		{name: "Epimorphic Skeleton", cost:40 , armor:186 , ram:0, hp: 0.5, hpMulti: 0.13, icon: "Endoskeleton.webp"},
 		{name: "Rara Avis", cost:45 , armor:0 , ram:0, hp: 2, hpMulti: 0, icon: "T1000.webp"}
     ],
     NERVOUS_SYSTEM: [
@@ -971,7 +969,7 @@ const cyberwareData = {
 		{name: "Kiroshi 'Sentry' Optics", cost:2 , armor:0 , ram:0, hp: 0, hpMulti: 0, icon: "KiroshiOpticsSensor.webp"},
 		{name: "Kiroshi 'Stalker' Optics", cost:2 , armor:0 , ram:0, hp: 0, hpMulti: 0, icon: "KiroshiOpticsPiercing.webp"},
 		{name: "Kiroshi 'Clairvoyant' Optics ", cost:8 , armor:0 , ram:0, hp: 0, hpMulti: 0, icon: "KiroshiOpticsWallhack.webp"},
-		{name: "Kiroshi 'The Oracle' Optics", cost:10 , armor:0 , ram:0, hp: 0, hpMulti: 0, icon: "KiroshiOpticsCombined.webp"},
+		{name: "Kiroshi 'The Oracle' Optics", cost:10 , armor:0 , ram:0, hp: 0.5, hpMulti: 0, icon: "KiroshiOpticsCombined.webp"},
 		{name: "Kiroshi 'Cockatrice' Optics", cost:30 , armor:0 , ram:0, hp: 0, hpMulti: 0, icon: "Iconic_KiroshiOpticsBare.webp"}
     ],
     HANDS: [
@@ -1010,6 +1008,7 @@ const cyberwareData = {
 	// Uncheck all checkboxes
 	document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
 		cb.checked = false;
+		cb.dispatchEvent(new Event('change'));
 	});
 
 	// Reset number inputs to their defaults
@@ -1043,6 +1042,8 @@ const cyberwareData = {
 		delete slot.dataset.hp;
 		delete slot.dataset.hpMulti;
 	});
+	
+	
 
 	updateStats();
 }
@@ -1070,7 +1071,7 @@ function updateStats() {
     const solo2Enabled = document.getElementById('solo2Checkbox').checked;
     const adrenalineRush1Enabled = document.getElementById('adrenalineRush1Checkbox').checked;
     const adrenalineRush2Enabled = document.getElementById('adrenalineRush2Checkbox').checked;
-    const solo3Enabled = document.getElementById('solo3Checkbox').checked;
+    const boneReinforcementEnabled = document.getElementById('skeletonToggle').checked;
     const customHP = parseInt(document.getElementById('customHPInput').value) || 0;
     const customHPPercent = parseInt(document.getElementById('customHPPercentInput').value) || 0;
     const level = parseInt(document.getElementById('levelInput').value) || 0;
@@ -1129,10 +1130,15 @@ function updateStats() {
         
         // Check for Chrome Compressor
         const content = slot.querySelector('.slot-content');
+		let hasEpimorphicSkeleton = false;
 		if (content) {
 			const label = content.querySelector('.slot-label');
 			if (label && label.textContent === 'Chrome Compressor') {
 				hasChromeCompressor = true;
+			}
+			// Check for Epimorphic Skeleton
+			if (label && label.textContent === 'Epimorphic Skeleton') {
+				hasEpimorphicSkeleton = true;
 			}
 		}
         
@@ -1158,6 +1164,10 @@ function updateStats() {
 		
 		if (hpMultiData) {
 			totalHPMulti += parseFloat(hpMultiData);
+			// Bone Reinforcement: Add 0.02 to HPmulti if Epimorphic Skeleton is equipped
+			if (boneReinforcementEnabled && hasEpimorphicSkeleton) {
+				totalHPMulti += 0.02;
+			}
 		}
     });
     
@@ -1234,13 +1244,6 @@ function updateStats() {
 		maxHP *= totalHPMulti;
 	}
 	
-	// Solo 3: +10% HP only if Adrenaline Rush 2 is NOT active
-	if (solo3Enabled && !adrenalineRush2Enabled) {
-		 totalHPMulti=0;
-		totalHPMulti += 1.1; // +10% HP
-		maxHP *= totalHPMulti;
-	}
-	
 	// Apply custom HP percentage bonus
 	if (customHPPercent > 0) {
 		maxHP *= (1 + customHPPercent / 100);
@@ -1261,7 +1264,7 @@ function updateStats() {
 	hpText.textContent = `HP: ${currentHP}`;
 	
 	// Calculate fill percentage based on current HP vs max HP
-	const hpPercent = Math.min((currentHP / 1000) * 100, 100);
+	const hpPercent = Math.min((currentHP / 1200) * 100, 100);
 	hpFill.style.height = `${hpPercent}%`;
 	
 	const edgeRunnerLabel = document.getElementById('edgeRunnerLabel');
@@ -1292,7 +1295,7 @@ document.getElementById('solo1Checkbox').addEventListener('change', updateStats)
 document.getElementById('solo2Checkbox').addEventListener('change', updateStats);
 document.getElementById('adrenalineRush1Checkbox').addEventListener('change', updateStats);
 document.getElementById('adrenalineRush2Checkbox').addEventListener('change', updateStats);
-document.getElementById('solo3Checkbox').addEventListener('change', updateStats);
+document.getElementById('skeletonToggle').addEventListener('change', updateStats);
 document.getElementById('customHPInput').addEventListener('input', updateStats);
 document.getElementById('customHPPercentInput').addEventListener('input', updateStats);
 document.getElementById('levelInput').addEventListener('input', updateStats);
@@ -1473,7 +1476,7 @@ document.getElementById('exportBtn').addEventListener('click', () => {
         solo2: document.getElementById('solo2Checkbox').checked,
         adrenalineRush1: document.getElementById('adrenalineRush1Checkbox').checked,
         adrenalineRush2: document.getElementById('adrenalineRush2Checkbox').checked,
-        solo3: document.getElementById('solo3Checkbox').checked,
+        boneReinforcement: document.getElementById('skeletonToggle').checked,
         customHP: parseInt(document.getElementById('customHPInput').value) || 0,
         customHPPercent: parseInt(document.getElementById('customHPPercentInput').value) || 0,
         level: parseInt(document.getElementById('levelInput').value) || 0,
@@ -1485,8 +1488,6 @@ document.getElementById('exportBtn').addEventListener('click', () => {
             cool: parseInt(document.getElementById('coolInput').value) || 3
         },
 		toggles: {
-			skeleton: document.getElementById('skeletonToggle').checked,
-			hand: document.getElementById('handToggle').checked,
 			modded: document.getElementById('moddedSlotsToggle').checked
 		},
         slots: {}
@@ -1611,8 +1612,8 @@ document.getElementById('importBtn').addEventListener('click', () => {
                 if (build.adrenalineRush2 !== undefined) {
                     document.getElementById('adrenalineRush2Checkbox').checked = build.adrenalineRush2;
                 }
-                if (build.solo3 !== undefined) {
-                    document.getElementById('solo3Checkbox').checked = build.solo3;
+                if (build.boneReinforcement !== undefined) {
+                    document.getElementById('skeletonToggle').checked = build.boneReinforcement;
                 }
                 if (build.customHP !== undefined) {
                     document.getElementById('customHPInput').value = build.customHP;
@@ -1627,8 +1628,6 @@ document.getElementById('importBtn').addEventListener('click', () => {
                 }
 				
 				if (build.toggles) {
-					document.getElementById('skeletonToggle').checked = !!build.toggles.skeleton;
-					document.getElementById('handToggle').checked = !!build.toggles.hand;
 					document.getElementById('moddedSlotsToggle').checked = !!build.toggles.modded;
 				}
                 
@@ -1697,8 +1696,6 @@ document.getElementById('importBtn').addEventListener('click', () => {
                 updateStats();
                 alert('Build imported successfully!');
 				
-				document.getElementById('skeletonToggle').dispatchEvent(new Event('change'));
-				document.getElementById('handToggle').dispatchEvent(new Event('change'));
 				document.getElementById('moddedSlotsToggle').dispatchEvent(new Event('change'));
             } catch (error) {
                 alert('Error importing build: ' + error.message);
@@ -1727,37 +1724,6 @@ function clearSlot(slot) {
     }
 }
 
-document.getElementById('skeletonToggle').addEventListener('change', (e) => {
-    const slot = document.querySelector('.slotL[data-category="SKELETON"]');
-
-    if (!slot) return;
-
-    if (e.target.checked) {
-        slot.style.display = 'flex';
-    } else {
-        clearSlot(slot);          // 👈 empty it
-        slot.style.display = 'none';
-    }
-
-    updateStats();
-});
-
-document.getElementById('handToggle').addEventListener('change', (e) => {
-    const handSlots = document.querySelectorAll('.slotR[data-category="HANDS"]');
-    const slot = handSlots[1];
-
-    if (!slot) return;
-
-    if (e.target.checked) {
-        slot.style.display = 'flex';
-    } else {
-        clearSlot(slot);          // 👈 empty it
-        slot.style.display = 'none';
-    }
-
-    updateStats();
-});
-
 document.getElementById('moddedSlotsToggle').addEventListener('change', (e) => {
     const show = e.target.checked;
 
@@ -1777,27 +1743,6 @@ document.getElementById('moddedSlotsToggle').addEventListener('change', (e) => {
     updateStats();
 });
 
-// Toggle functionality for hiding/showing slots
-
-// Skeleton Toggle - Hide 3rd skeleton slot from the right (which is the 4th from left, index 3)
-document.getElementById('skeletonToggle').addEventListener('change', (e) => {
-    const skeletonSlots = document.querySelectorAll('.slotL[data-category="SKELETON"]');
-    // 3rd from right = index 0 (since there are 3 regular skeleton slots: indices 0, 1, 2)
-    if (skeletonSlots[0]) {
-        skeletonSlots[0].style.display = e.target.checked ? 'flex' : 'none';
-    }
-});
-
-// Hand Toggle - Hide 2nd hand slot from the left (index 1)
-document.getElementById('handToggle').addEventListener('change', (e) => {
-    const handSlots = document.querySelectorAll('.slotR[data-category="HANDS"]');
-    if (handSlots[1]) {
-        handSlots[1].style.display = e.target.checked ? 'flex' : 'none';
-    }
-});
-
-document.getElementById('skeletonToggle').dispatchEvent(new Event('change'));
-document.getElementById('handToggle').dispatchEvent(new Event('change'));
 
 // Modded Slots Toggle - Hide/Show all L2 and R2 slots
 const toggle = document.getElementById("moddedSlotsToggle");
