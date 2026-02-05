@@ -1,0 +1,1560 @@
+<head>
+	<style>
+	body {
+		height:100%;
+		background: #b32020;
+		background: linear-gradient(180deg,rgba(179, 32, 32, 1) 0%, rgba(128, 23, 23, 1) 48%, rgba(0, 0, 0, 1) 100%);
+	}
+	
+	html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+	
+	#wrapper{
+		height:auto;
+		width:auto;
+	}
+	
+	#cyberware{
+		width:1760px;
+		min-height:1020px;
+		height:auto;
+		margin:auto;
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	.leftCol{
+		width:660px;
+		display: flex;
+		flex-direction: column;
+	}
+	
+	.midCol{
+		height:1000px;
+		width:400px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+		padding-top: 0px;
+	}
+	
+	.bars-container{
+		display: flex;
+		gap: 20px;
+		margin-top: 15px;
+	}
+	
+	.perks-container{
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 8px;
+		margin-top: 10px;
+	}
+	
+	.stats-perks-row{
+		display: flex;
+		gap: 10px;
+		margin-top: 10px;
+	}
+	
+	.toggle-perks-container{
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		flex: 1;
+	}
+	
+	.toggle-perk-item{
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background-color: #333;
+		padding: 10px;
+		border-radius: 5px;
+		color: white;
+		font-size: 12px;
+	}
+	
+	.toggle-perk-item input[type="checkbox"]{
+		cursor: pointer;
+		width: 20px;
+		height: 20px;
+	}
+	
+	.bar1{
+	height:100px;
+	width:120px;
+	display: flex;
+	flex-direction: column;
+	background-color:#FCF600;
+	justify-content: flex-start;
+	margin:auto;
+	text-align:center;
+	position: relative;
+	overflow: hidden;
+	}
+	
+	.bar2{
+	height:100px;
+	width:120px;
+	display: flex;
+	flex-direction: column;
+	background-color:red;
+	justify-content: flex-start;
+	margin:auto;
+	text-align:center;
+	position: relative;
+	overflow: hidden;
+	}
+	
+	.bar3{
+	height:100px;
+	width:120px;
+	display: flex;
+	flex-direction: column;
+	background-color:#0CB7F7;
+	justify-content: flex-start;
+	margin:auto;
+	text-align:center;
+	position: relative;
+	overflow: hidden;
+	}
+	
+	.bar-fill{
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background-color: rgba(0, 255, 255, 0.3);
+		transition: height 0.3s ease;
+	}
+	
+	.bar-text{
+		position: relative;
+		z-index: 1;
+		color:#FFF;
+		text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+		font-weight: bold;
+		padding: 5px;
+	}
+	
+	.discount-checkbox{
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background-color: #333;
+		padding: 10px;
+		border-radius: 5px;
+		color: white;
+		font-size: 12px;
+	}
+	
+	.discount-checkbox input[type="checkbox"]{
+		cursor: pointer;
+		width: 20px;
+		height: 20px;
+	}
+	
+	.boost-checkbox{
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background-color: #333;
+		padding: 10px;
+		border-radius: 5px;
+		color: white;
+		font-size: 12px;
+	}
+	
+	.boost-checkbox input[type="checkbox"]{
+		cursor: pointer;
+		width: 20px;
+		height: 20px;
+	}
+	
+	.perk-item{
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background-color: #333;
+		padding: 10px;
+		border-radius: 5px;
+		color: white;
+		font-size: 12px;
+	}
+	
+	.perk-item input[type="checkbox"]{
+		cursor: pointer;
+		width: 20px;
+		height: 20px;
+	}
+	
+	.level-selector{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 12px;
+    margin-top: 10px;
+
+    width: 100%;      /* 👈 match stats container width */
+    box-sizing: border-box;
+	}
+	
+	.level-selector input[type="number"]{
+		width: 60px;
+		padding: 5px;
+		border-radius: 3px;
+		border: 1px solid #00ffff;
+		background-color: #222;
+		color: white;
+		text-align: center;
+	}
+	
+	.stats-container{
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		background-color: #333;
+		padding: 10px;
+		border-radius: 5px;
+		color: white;
+		font-size: 12px;
+		align-items: flex-start;
+		flex: 1;
+	}
+	
+	.stats-warning{
+		width: 100%;
+		text-align: center;
+		font-weight: bold;
+		margin-top: 5px;
+	}
+	
+	.stats-warning.over-limit{
+		color: #ff4444;
+	}
+	
+	.stats-warning.valid{
+		color: #44ff44;
+	}
+	
+	.stat-item{
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+	
+	.stat-item label{
+		min-width: 100px;
+	}
+	
+	.stat-item input[type="number"]{
+		width: 50px;
+		padding: 3px;
+		border-radius: 3px;
+		border: 1px solid #00ffff;
+		background-color: #222;
+		color: white;
+		text-align: center;
+	}
+	
+	.build-buttons{
+		display: flex;
+		justify-content: center;
+		gap: 10px;
+		margin-top: 10px;
+	}
+	
+	.build-buttons button{
+		padding: 10px 20px;
+		background-color: #00ffff;
+		color: black;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		font-weight: bold;
+		font-size: 12px;
+	}
+	
+	.build-buttons button:hover{
+		background-color: #00cccc;
+	}
+
+	.rightCol{
+		width:660px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* LEFT column: row left → right, anchored right */
+.SlotStripL{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;   /* anchor to right side */
+    gap: 10px;
+	height:120px;
+}
+
+.SlotStripR{
+    display: flex;
+    flex-direction: row;          /* 👈 natural order */
+    justify-content: flex-start;  /* hug the text */
+    gap: 10px;
+	height:120px;
+	}
+	
+	.slotL{
+		height:100px;
+		width:100px;
+		margin:5px;
+		flex-shrink: 0;
+		background-image:url("slot.png")
+	}
+	
+	.slotL2{
+		height:100px;
+		width:100px;
+		margin:5px;
+		background-color:grey;
+		flex-shrink: 0;
+		background-image:url("slot_m.png")
+	}
+	
+	.slotR{
+		height:100px;
+		width:100px;
+		margin:5px;
+		background-color:black;
+		flex-shrink: 0;
+		background-image:url("slot.png")
+	}
+	
+	.slotR2{
+		height:100px;
+		width:100px;
+		margin:5px;
+		background-color:grey;
+		flex-shrink: 0;
+		background-image:url("slot_m.png")
+	}
+	
+	.textL{
+		width:300px;
+		height:20px;
+		margin-top:35px;
+		text-align:center;
+		align-self: flex-end;
+		color:white;
+		text-align: right; 
+		margin-right:5px;
+		text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+		font-weight: bold;
+	}
+	
+	.textR{
+		width:300px;
+		height:20px;
+		margin-top:35px;
+		text-align:center;
+		align-self: flex-start;
+		color:white;
+		text-align: left; 
+		margin-left:5px;
+		text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+		font-weight: bold;
+	}
+	
+	.slotL, .slotR, .slotL2, .slotR2{
+		cursor:pointer;
+		position:relative;
+	}
+
+	.slotL:hover, .slotR:hover, .slotL2:hover, .slotR2:hover{
+		outline:2px solid #00ffff;
+	}
+
+	.cyberware-menu{
+		position:fixed;
+		left:0;
+		width:260px;
+		background:#111;
+		border:2px solid #00ffff;
+		padding:10px;
+		z-index:999;
+		display:none;
+	}
+
+	.cyberware-menu div{
+		padding:6px;
+		color:#fff;
+		font-size:14px;
+	}
+
+	.cyberware-menu div:hover{
+		background:#00ffff;
+		color:black;
+	}
+	
+	.build-name{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    max-width: 380px;
+    margin-top: 10px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 12px;
+	text-align:center;
+	font-weight:bold;
+	}
+
+	.build-name input{
+		padding: 6px;
+		border-radius: 3px;
+		border: 1px solid #00ffff;
+		background-color: #222;
+		color: white;
+	}
+	
+	a:link {
+	  color: white;
+	  background-color: transparent;
+	  text-decoration: none;
+	}
+
+	a:visited {
+	  color: white;
+	  background-color: transparent;
+	  text-decoration: none;
+	}
+
+	a:hover {
+	  color: yellow;
+	  background-color: transparent;
+	  text-decoration: underline;
+	}
+
+	a:active {
+	  color: yellow;
+	  background-color: transparent;
+	  text-decoration: underline;
+	}
+	
+	.cyberware-menu div{
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 6px;
+		color: #fff;
+		font-size: 13px;
+		cursor: pointer;
+	}
+
+	.cyberware-menu img{
+		width: 24px;          /* reduced size */
+		height: 24px;
+		object-fit: contain;
+		flex-shrink: 0;
+	}
+	
+.slot-content{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
+
+/* ICON — perfectly centered in the slot */
+.slot-icon{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slot-icon img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* LABEL — exactly 10px below the slot */
+.slot-label{
+    position: absolute;
+    top: 100%;
+    margin-top: 5px;     /* 👈 exact spacing */
+    font-size: 10px;
+    font-weight: bold;
+    color: #00ffff;
+    text-align: center;
+    width: 90px;
+    line-height: 1.1;
+    text-shadow: 1px 1px 2px black;
+    pointer-events: none;
+	background: rgba(0,0,0,0.6);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.slot-filled{
+    background-image: url("slot3.png") !important;
+}
+
+/* ───────── MODDED SLOTS HIDDEN (COMPACT) ───────── */
+
+.SlotStripL.compact{
+    flex-direction: row;
+    justify-content: flex-end;   /* collapse inward */
+}
+
+.SlotStripR.compact{
+    justify-content: flex-start;  /* still hug text */
+}
+
+
+	
+	</style>
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="cyberware">
+			<div class="leftCol">
+				<div class="textL">FRONTAL CORTEX</div>
+				<div class="SlotStripL">
+					<div class="slotL2" data-category="FRONTAL_CORTEX"></div>
+					<div class="slotL2" data-category="FRONTAL_CORTEX"></div>
+					<div class="slotL2" data-category="FRONTAL_CORTEX"></div>
+					<div class="slotL" data-category="FRONTAL_CORTEX"></div>
+					<div class="slotL" data-category="FRONTAL_CORTEX"></div>
+					<div class="slotL" data-category="FRONTAL_CORTEX"></div>
+				</div>
+				<div class="textL">ARMS</div>
+				<div class="SlotStripL">
+					<div class="slotL2" data-category="ARMS"></div>
+					<div class="slotL2" data-category="ARMS"></div>
+					<div class="slotL2" data-category="ARMS"></div>
+					<div class="slotL2" data-category="ARMS"></div>
+					<div class="slotL2" data-category="ARMS"></div>
+					<div class="slotL" data-category="ARMS"></div>
+				</div>
+				<div class="textL">SKELETON</div>
+				<div class="SlotStripL">
+					<div class="slotL2" data-category="SKELETON"></div>
+					<div class="slotL2" data-category="SKELETON"></div>
+					<div class="slotL2" data-category="SKELETON"></div>
+					<div class="slotL" data-category="SKELETON"></div>
+					<div class="slotL" data-category="SKELETON"></div>
+					<div class="slotL" data-category="SKELETON"></div>
+				</div>
+				<div class="textL">NERVOUS SYSTEM</div>
+				<div class="SlotStripL">
+					<div class="slotL2" data-category="NERVOUS_SYSTEM"></div>
+					<div class="slotL2" data-category="NERVOUS_SYSTEM"></div>
+					<div class="slotL2" data-category="NERVOUS_SYSTEM"></div>
+					<div class="slotL" data-category="NERVOUS_SYSTEM"></div>
+					<div class="slotL" data-category="NERVOUS_SYSTEM"></div>
+					<div class="slotL" data-category="NERVOUS_SYSTEM"></div>
+				</div>
+				<div class="textL">INTEGUMENTARY SYSTEM</div>
+				<div class="SlotStripL">
+					<div class="slotL2" data-category="INTEGUMENTARY_SYSTEM"></div>
+					<div class="slotL2" data-category="INTEGUMENTARY_SYSTEM"></div>
+					<div class="slotL2" data-category="INTEGUMENTARY_SYSTEM"></div>
+					<div class="slotL" data-category="INTEGUMENTARY_SYSTEM"></div>
+					<div class="slotL" data-category="INTEGUMENTARY_SYSTEM"></div>
+					<div class="slotL" data-category="INTEGUMENTARY_SYSTEM"></div>
+				</div>
+			</div>
+			
+			<div class="midCol">
+				<div class="bars-container">
+					<div class="bar1">
+						<div class="bar-fill" id="costFill"></div>
+						<div class="bar-text" id="costText">Capacity: 0</div>
+					</div>
+					<div class="bar2">
+						<div class="bar-fill" id="armorFill"></div>
+						<div class="bar-text" id="armorText">Armor: 0</div>
+					</div>
+					<div class="bar3">
+						<div class="bar-fill" id="ramFill"></div>
+						<div class="bar-text" id="ramText">RAM: 0</div>
+					</div>
+				</div>
+				<div class="build-name">
+					<label for="buildNameInput">Build Name</label>
+					<input type="text" id="buildNameInput" placeholder="My Cyberpunk Build">
+				</div>
+				<div class="perks-container">
+					<div class="discount-checkbox">
+						<input type="checkbox" id="discountCheckbox">
+						<label for="discountCheckbox">All Things Cyber (-20% Cost Skeleton and Integumentary)</label>
+					</div>
+					<div class="boost-checkbox">
+						<input type="checkbox" id="boostCheckbox">
+						<label for="boostCheckbox">Edge Runner (+50 Max Capacity, -25% Max HP)</label>
+					</div>
+					<div class="perk-item">
+						<input type="checkbox" id="engineerCheckbox1">
+						<label for="engineerCheckbox1">Engineer 1 (+5 Capacity)</label>
+					</div>
+					<div class="perk-item">
+						<input type="checkbox" id="engineerCheckbox2">
+						<label for="engineerCheckbox2">Engineer 2 (+10 Capacity)</label>
+					</div>
+					<div class="perk-item">
+						<input type="checkbox" id="randomShardsCheckbox">
+						<label for="randomShardsCheckbox">Random Shards (+54 Capacity)</label>
+					</div>
+					<div class="perk-item">
+						<input type="checkbox" id="cyberjunkieCheckbox">
+						<label for="cyberjunkieCheckbox">Cyberjunkie (+10 Capacity)</label>
+					</div>
+					<div class="perk-item">
+						<input type="checkbox" id="dogEatDogCheckbox">
+						<label for="dogEatDogCheckbox">Dog Eat Dog (+4 Capacity)</label>
+					</div>
+					<div class="perk-item">
+						<input type="checkbox" id="psychoKillerCheckbox">
+						<label for="psychoKillerCheckbox">Psycho Killer (+6 Capacity)</label>
+					</div>
+					<div class="perk-item">
+						<input type="checkbox" id="ramPerk1Checkbox">
+						<label for="ramPerk1Checkbox">Hack Queue (+1 RAM)</label>
+					</div>
+					<div class="perk-item">
+						<input type="checkbox" id="ramPerk2Checkbox">
+						<label for="ramPerk2Checkbox">Queue Acceleration (+1 RAM)</label>
+					</div>
+					<div class="perk-item">
+						<input type="checkbox" id="ramPerk3Checkbox">
+						<label for="ramPerk3Checkbox">Netrunner 1 (+1 RAM)</label>
+					</div>
+					<div class="perk-item">
+						<input type="checkbox" id="ramPerk4Checkbox">
+						<label for="ramPerk4Checkbox">Netrunner 2 (+1 RAM)</label>
+					</div>
+				</div>
+				<div class="level-selector">
+					<label for="levelInput">Level:</label>
+					<input type="number" id="levelInput" min="0" max="60" value="0">
+				<label for="levelInput">(+3 capacity per Level):</label>
+			</div>
+			<div class="stats-perks-row">
+				<div class="stats-container">
+					<div style="text-align:left; font-weight: bold; margin-bottom: 5px;">+4 capacity for each stat at 9 or above <br>+1 ram for every 4 points in Intelligence</div>
+					<div class="stat-item">
+						<label for="bodyInput">Body:</label>
+						<input type="number" id="bodyInput" min="3" max="20" value="3">
+					</div>
+					<div class="stat-item">
+						<label for="reflexesInput">Reflexes:</label>
+						<input type="number" id="reflexesInput" min="3" max="20" value="3">
+					</div>
+					<div class="stat-item">
+						<label for="technicalInput">Technical:</label>
+						<input type="number" id="technicalInput" min="3" max="20" value="3">
+					</div>
+					<div class="stat-item">
+						<label for="intelligenceInput">Intelligence:</label>
+						<input type="number" id="intelligenceInput" min="3" max="20" value="3">
+					</div>
+					<div class="stat-item">
+						<label for="coolInput">Cool:</label>
+						<input type="number" id="coolInput" min="3" max="20" value="3">
+					</div>
+					<div class="stats-warning" id="statsWarning">Level required: 1</div>
+				</div>
+				<div class="toggle-perks-container">
+					<div class="toggle-perk-item">
+						<input type="checkbox" id="skeletonToggle">
+						<label for="skeletonToggle">License to Chrome (+1 Skeleton Slot)</label>
+					</div>
+					<div class="toggle-perk-item">
+						<input type="checkbox" id="handToggle">
+						<label for="handToggle">Ambidextrous (+1 Hand Slot)</label>
+					</div>
+					<div class="toggle-perk-item">
+						<input type="checkbox" id="moddedSlotsToggle">
+						<label for="moddedSlotsToggle">Show Modded Slots</label>
+					</div>
+					<div class="toggle-perk-item">
+						<input type="checkbox" id="placeholderToggle">
+						<label for="placeholderToggle">Placeholder</label>
+					</div>
+				</div>
+			</div>
+			<div class="build-buttons">
+				<button id="exportBtn">Export Build</button>
+				<button id="importBtn">Import Build</button>
+			</div>
+					<div style="margin-top: 10px; font-size: 12px; text-align: center;">
+						<a href="https://www.cyberpunk.net/en/build-planner" target="_blank">
+							Official Cyberpunk Build Planner
+						</a>
+						|
+						<a href="https://cyberpunk.fandom.com/wiki/Cyberpunk_2077_Cyberware" target="_blank">
+							Cyberware
+						</a>
+						|
+						<a href="https://cyberpunk.fandom.com/wiki/Cyberpunk_2077_Weapons" target="_blank">
+							Weapons
+						</a>
+						<br>
+						<a href="https://cyberpunk.fandom.com/wiki/Cyberpunk_2077_Quickhacks" target="_blank">
+							Quickhacks
+						</a>
+						|
+						<a href="https://cyberpunk.fandom.com/wiki/Cyberpunk_2077_Attachments_and_Modifications" target="_blank">
+							Atachements
+						</a>
+						|
+						<a href="https://cyberpunk.fandom.com/wiki/Cyberpunk_2077_Consumables" target="_blank">
+							Consumables
+						</a>
+						|
+						<a href="https://cyberpunk.fandom.com/wiki/Cyberpunk_2077_Endings" target="_blank">
+							Endings
+						</a>
+					</div>
+				</div>
+				<div class="rightCol">
+				<div class="textR">OPERATING SYSTEM</div>
+				<div class="SlotStripR">
+					<div class="slotR" data-category="OPERATING_SYSTEM"></div>
+					<div class="slotR2" data-category="OPERATING_SYSTEM"></div>
+					<div class="slotR2" data-category="OPERATING_SYSTEM"></div>
+					<div class="slotR2" data-category="OPERATING_SYSTEM"></div>
+					<div class="slotR2" data-category="OPERATING_SYSTEM"></div>
+					<div class="slotR2" data-category="OPERATING_SYSTEM"></div>
+				</div>
+				<div class="textR">FACE</div>
+				<div class="SlotStripR">
+					<div class="slotR" data-category="FACE"></div>
+					<div class="slotR2" data-category="FACE"></div>
+					<div class="slotR2" data-category="FACE"></div>
+					<div class="slotR2" data-category="FACE"></div>
+					<div class="slotR2" data-category="FACE"></div>
+					<div class="slotR2" data-category="FACE"></div>
+				</div>
+				<div class="textR">HANDS</div>
+				<div class="SlotStripR">
+					<div class="slotR" data-category="HANDS"></div>
+					<div class="slotR" data-category="HANDS"></div>
+					<div class="slotR2" data-category="HANDS"></div>
+					<div class="slotR2" data-category="HANDS"></div>
+					<div class="slotR2" data-category="HANDS"></div>
+					<div class="slotR2" data-category="HANDS"></div>				
+				</div>
+				<div class="textR">CIRCULATORY SYSTEM</div>
+				<div class="SlotStripR">
+					<div class="slotR" data-category="CIRCULATORY_SYSTEM"></div>
+					<div class="slotR" data-category="CIRCULATORY_SYSTEM"></div>
+					<div class="slotR" data-category="CIRCULATORY_SYSTEM"></div>
+					<div class="slotR2" data-category="CIRCULATORY_SYSTEM"></div>
+					<div class="slotR2" data-category="CIRCULATORY_SYSTEM"></div>
+					<div class="slotR2" data-category="CIRCULATORY_SYSTEM"></div>				
+				</div>
+				<div class="textR">LEGS</div>
+				<div class="SlotStripR">
+					<div class="slotR" data-category="LEGS"></div>
+					<div class="slotR2" data-category="LEGS"></div>
+					<div class="slotR2" data-category="LEGS"></div>
+					<div class="slotR2" data-category="LEGS"></div>
+					<div class="slotR2" data-category="LEGS"></div>
+					<div class="slotR2" data-category="LEGS"></div>				
+				</div>
+			</div>
+			</div>
+
+
+		</div>
+	</div>
+	<script>
+const cyberwareData = {
+    FRONTAL_CORTEX: [
+		{name: "Kerenzikov Boost System", cost: 3, armor: 0, ram:0, icon: "KerenziovBoostSystem.webp"},
+		{name: "Mechatronic Core", cost: 5, armor: 0, ram:0, icon: "MechatronicCore.webp"},
+		{name: "Self-ICE", cost: 5, armor: 0, ram:2, icon: "SelfIce.webp"},
+		{name: "Camillo RAM Manager", cost: 8, armor: 0, ram:2, icon: "CamilloRamManager.webp"},
+		{name: "RAM Upgrade", cost: 8, armor: 0, ram:2, icon: "RamUpgrade.webp"},
+		{name: "Ex-Disk", cost: 10, armor: 0, ram:6, icon: "ExDisk.webp"},
+		{name: "Newton Module", cost: 14, armor: 0, ram:0, icon: "axo.webp"},
+		{name: "Bioconductor", cost: 16, armor: 0, ram:-4, icon: "BioConductors.webp"},
+		{name: "Memory Boost", cost: 18, armor: 0, ram:1, icon: "MemoryBoost.webp"},
+		{name: "RAM Reallocator", cost: 40, armor: 0, ram:2, icon: "CamilloRamManager.webp"},
+		{name: "Quantum Tuner", cost: 45, armor: 0, ram:0, icon: "TimeBank.webp"},
+        {name: "Axolotl", cost: 48, armor: 0, ram:0, icon: "axo.webp"},
+		{name: "COX-2 Cybersomatic Optimizer", cost: 50, armor: 0, ram:-4, icon: "BioConductors.webp"}
+    ],
+    ARMS: [
+        {name: "Gorilla Arms", cost: 8, armor: 0, ram:0, icon: "StrongArms.webp"},
+        {name: "Mantis Blades", cost: 8, armor: 0, ram:0, icon: "MantisBlades.webp"},
+        {name: "Monowire", cost: 8, armor: 0, ram:0, icon: "NanoWires.webp"},
+        {name: "Projectile Launch System", cost: 8, armor: 0, ram:0, icon: "ProjectileLauncher.webp"}
+    ],
+    OPERATING_SYSTEM: [
+		{name: "Militech Paraline", cost: 14, armor: 0, ram:9, icon: "MilitechParaline.webp"},
+        {name: "Arasaka Shadow", cost: 14, armor: 0, ram:9, icon: "ArasakaShadow.webp"},
+        {name: "Biotech Σ", cost: 16, armor: 0, ram:9, icon: "BiotechSigma.webp"},
+		{name: "Tetratronic Rippler", cost: 16, armor: 0, ram:20, icon: "TetratronicRippler.webp"},
+		{name: "Raven Microcyber", cost: 20, armor: 0, ram:9, icon: "RavenMicrocyber.webp"},
+		{name: "NetWatch Netdriver", cost: 25, armor: 0, ram:13, icon: "NetWatchNetdriver.webp"},
+		{name: "Militech Canto", cost: 33, armor: 0, ram:10, icon: "HauntedCyberdeck.webp"},
+		{name: "Moore Tech Berserk", cost: 12, armor: 0, ram:0, icon: "BerserkC1.webp"},
+		{name: "Zetatech Berserk", cost: 16, armor: 0, ram:0, icon: "BerserkC3.webp"},
+		{name: "BioDyne Berserk", cost: 20, armor: 0, ram:0, icon: "BerserkC2.webp"},
+		{name: "Militech Berserk", cost: 35, armor: 0, ram:0, icon: "BerserkC4.webp"},
+		{name: "QianT 'Warp Dancer'", cost: 14, armor: 0, ram:0, icon: "SandevistanC3.webp"},
+		{name: "Dynalar Sandevistan", cost: 18, armor: 0, ram:0, icon: "SandevistanC2.webp"},
+		{name: "Zetatech Sandevistan", cost: 20, armor: 0, ram:0, icon: "SandevistanC1.webp"},
+		{name: "Militech 'Falcon'", cost: 39, armor: 0, ram:0, icon: "SandevistanC4.webp"},
+		{name: "Militech 'Apogee'", cost: 44, armor: 0, ram:0, icon: "SandevistanApogee.webp"},
+		{name: "Chrome Compressor", cost: 0, armor: 0, ram:0, icon: "CyberwareCapacityBooster.webp"}
+    ],
+    SKELETON: [
+        {name: "Titanium Bones", cost: 6, armor: 46, ram:0, icon: "TitaniumInfusedBones.webp"},
+		{name: "Bionic Joints", cost:8 , armor:130 , ram:0, icon: "BionicJoints.webp"},
+		{name: "RAM Recoup", cost:14 , armor:46 , ram:2, icon: "CompilingSkeleton.webp"},
+		{name: "Scarab", cost:14 , armor:176 , ram:0, icon: "RapidMuscleNurish.webp"},
+		{name: "Dense Marrow", cost: 16, armor: 54, ram:0, icon: "DenseMarrow.webp"},
+		{name: "Feen-X", cost:16 , armor:38 , ram:0, icon: "NeuroMatrix.webp"},
+		{name: "Kinetic Frame", cost:16 , armor:117 , ram:0, icon: "BoneMarrowCells.webp"},
+		{name: "Spring Joints", cost:16 , armor:46 , ram:0, icon: "AgileJoints.webp"},
+		{name: "Scar Coalescer", cost:20 , armor:46 , ram:0, icon: "NoPainNoGain.webp"},
+		{name: "Para Bellum", cost:25 , armor:150 , ram:0, icon: "T1000.webp"},
+		{name: "Universal Booster", cost:25 , armor:186 , ram:0, icon: "EnhancedBloodVessels.webp"},
+		{name: "Epimorphic Skeleton", cost:40 , armor:186 , ram:0, icon: "Endoskeleton.webp"},
+		{name: "Rara Avis", cost:45 , armor:0 , ram:0, icon: "T1000.webp"}
+    ],
+    NERVOUS_SYSTEM: [
+        {name: "Atomic Sensors", cost: 5, armor: 0, ram:0, icon: "TroubleFinder.webp"},
+		{name: "Reflex Tuner", cost:5 , armor:0 , ram:0, icon: "ReflexRecorder.webp"},
+		{name: "Synaptic Accelerator", cost:5 , armor:0 , ram:0, icon: "SynapticAccelerator.webp"},
+		{name: "Adrenaline Converter", cost:6 , armor:0 , ram:0, icon: "DetectorRush.webp"},
+		{name: "Tyrosine Injector", cost:8 , armor:0 , ram:0, icon: "TyrosineInjector.webp"},
+		{name: "Kerenzikov", cost:12 , armor:0 , ram:0, icon: "Kerenzikov.webp"},
+		{name: "Stabber", cost:12 , armor:0 , ram:0, icon: "OilDispenser.webp"},
+		{name: "NeoFiber", cost:14 , armor:0 , ram:0, icon: "NeoFiber.webp"},
+		{name: "Adreno-trigger", cost:20 , armor:0 , ram:0, icon: "DetectorRush.webp"},
+		{name: "Visual Cortex Support", cost:20 , ram:0, armor:0 , icon: "VisualCortexSupport.webp"},
+		{name: "Revulsor", cost:35 , armor:0 , ram:0, icon: "ReflexRecorder.webp"},
+		{name: "Deep-field Visual Interface", cost:40 , armor:0 , ram:0, icon: "VisualCortexSupport.webp"}
+    ],
+    INTEGUMENTARY_SYSTEM: [
+		{name: "Subdermal Armor", cost:5 , armor:49 , ram:0, icon: "BoringPlating.webp"},
+		{name: "Cellular Adapter", cost:10 , armor:162 , ram:0, icon: "PainDistributor.webp"},
+		{name: "ProxiShield", cost:10 , armor:36 , ram:0, icon: "ProximityReducer.webp"},
+		{name: "Cogito Lattice", cost:12 , armor:54 , ram:0, icon: "CogitoFrame.webp"},
+		{name: "Countershell", cost:12 , armor:57 , ram:0, icon: "SuddenAid.webp"},
+		{name: "RangeGuard", cost:14 , armor:34 , ram:0, icon: "ChargeSystem.webp"},
+		{name: "Carapace", cost:16 , armor:94 , ram:0, icon: "WeirdTankyPlating.webp"},
+		{name: "Defenzikov", cost:20 , armor:80 , ram:0, icon: "PlatingGlitch.webp"},
+		{name: "Nano-plating", cost:20 , armor:78 , ram:0, icon: "NanoTechPlates.webp"},
+		{name: "Optical Camo", cost:20 , armor:30 , ram:0, icon: "OpticalCamo.webp"},
+		{name: "Shock-n-Awe", cost:25 , armor:92 , ram:0, icon: "ElectroshockMechanism.webp"},
+		{name: "Painducer", cost:30 , armor:138 , ram:0, icon: "BloodDepleter.webp"},
+		{name: "Peripheral Inverse", cost:30 , armor:36 , ram:0, icon: "ProximityReducer.webp"},
+		{name: "Pain Editor", cost:35 , armor:108 , ram:0, icon: "PainReductor.webp"},
+		{name: "Chitin", cost:50 , armor:200 , icon: "Chiton.webp"}
+    ],
+    FACE: [
+        {name: "Basic Kiroshi Optics", cost:1 , armor:0 , ram:0, icon: "KiroshiOptics.webp"},
+		{name: "Kiroshi 'Doomsayer' Optics ", cost:2 , armor:0 , ram:0, icon: "KiroshiOpticsHunter.webp"},
+		{name: "Kiroshi 'Sentry' Optics", cost:2 , armor:0 , ram:0, icon: "KiroshiOpticsSensor.webp"},
+		{name: "Kiroshi 'Stalker' Optics", cost:2 , armor:0 , ram:0, icon: "KiroshiOpticsPiercing.webp"},
+		{name: "Kiroshi 'Clairvoyant' Optics ", cost:8 , armor:0 , ram:0, icon: "KiroshiOpticsWallhack.webp"},
+		{name: "Kiroshi 'The Oracle' Optics", cost:10 , armor:0 , ram:0, icon: "KiroshiOpticsCombined.webp"},
+		{name: "Kiroshi 'Cockatrice' Optics", cost:30 , armor:0 , ram:0, icon: "Iconic_KiroshiOpticsBare.webp"}
+    ],
+    HANDS: [
+        {name: "Ballistic Coprocessor", cost:2 , armor:0 , ram:0, icon: "PowerGrip.webp"},
+		{name: "Smart Link", cost:4 , armor:0 , ram:2, icon: "SmartLink.webp"},
+		{name: "Handle Wrap", cost:8 , armor:0 , ram:0, icon: "KnifeSharpener.webp"},
+		{name: "Microgenerator", cost:9 , armor:0 , ram:0, icon: "MicroGenerator.webp"},
+		{name: "Shock Absorber", cost:12 , armor:0 , ram:0, icon: "JointLock.webp"},
+		{name: "Immovable Force", cost:35 , armor:0 , ram:0, icon: "GunStabilizer.webp"}
+    ],
+    CIRCULATORY_SYSTEM: [
+        {name: "ThreatEvac", cost:5 , armor:0 , ram:0, icon: "CatchMeIfYouCan.webp"},
+		{name: "Heal-On-Kill", cost:10 , armor:0 , ram:0, icon: "HealOnKill.webp"},
+		{name: "Clutch Padding", cost:12 , armor:0 , ram:0, icon: "ShockAbsorber.webp"},
+		{name: "Microrotors", cost:12 , armor:0 , ram:0, icon: "CyberRotors.webp"},
+		{name: "Adrenaline Booster", cost:14 , armor:0 , ram:0, icon: "StaminaRegenBooster.webp"},
+		{name: "Biomonitor", cost:14 , armor:0 , ram:0, icon: "Biomonitor.webp"},
+		{name: "Feedback Circuit", cost:14 , armor:0 , ram:0, icon: "DischargeConnector.webp"},
+		{name: "Blood Pump", cost:15 , armor:0 , ram:0, icon: "BloodPump.webp"},
+		{name: "Black Mamba", cost:16 , armor:0 , ram:0, icon: "ViralVenom.webp"},
+		{name: "Second Heart", cost:30 , armor:0 , ram:0, icon: "SecondHeart.webp"},
+		{name: "Electromag Recycler", cost:40 , armor:0 , ram:0, icon: "DischargeConnector.webp"},
+		{name: "Isometric Stabilizer", cost:40 , armor:0 , ram:0, icon: "ShockAbsorber.webp"}
+    ],
+    LEGS: [
+        {name: "Lynx Paws", cost:5 , armor:34 , ram:0, icon: "CatPaws.webp"},
+		{name: "Fortified Ankles", cost:6 , armor:103 , ram:0, icon: "ReinforcedMuscles.webp"},
+		{name: "Jenkins' Tendons", cost:6 , armor:22 , ram:0, icon: "JenkinsTendons.webp"},
+		{name: "Leeroy Ligament System", cost:8 , armor:26 , ram:0, icon: "IconicJenkinsTendons.webp"},
+		{name: "Reinforced Tendons", cost:8 , armor:20 , ram:0, icon: "BoostedTendons.webp"}
+    ]
+};
+</script>
+	<script>
+// Function to calculate and update total cyberware cost and armor
+function updateStats() {
+    let totalCost = 0;
+    let totalArmor = 0;
+	let totalRAM = 0;
+    let hasChromeCompressor = false;
+    
+    const discountEnabled = document.getElementById('discountCheckbox').checked;
+    const boostEnabled = document.getElementById('boostCheckbox').checked;
+    const engineer1Enabled = document.getElementById('engineerCheckbox1').checked;
+    const engineer2Enabled = document.getElementById('engineerCheckbox2').checked;
+    const randomShardsEnabled = document.getElementById('randomShardsCheckbox').checked;
+    const cyberjunkieEnabled = document.getElementById('cyberjunkieCheckbox').checked;
+    const dogEatDogEnabled = document.getElementById('dogEatDogCheckbox').checked;
+    const psychoKillerEnabled = document.getElementById('psychoKillerCheckbox').checked;
+    const ramPerk1Enabled = document.getElementById('ramPerk1Checkbox').checked;
+    const ramPerk2Enabled = document.getElementById('ramPerk2Checkbox').checked;
+    const ramPerk3Enabled = document.getElementById('ramPerk3Checkbox').checked;
+    const ramPerk4Enabled = document.getElementById('ramPerk4Checkbox').checked;
+    const level = parseInt(document.getElementById('levelInput').value) || 0;
+    
+    // Get base stats for R.Punk
+    const bodyPoints = parseInt(document.getElementById('bodyInput').value) || 3;
+    const reflexesPoints = parseInt(document.getElementById('reflexesInput').value) || 3;
+    const technicalPoints = parseInt(document.getElementById('technicalInput').value) || 3;
+    const intelligencePoints = parseInt(document.getElementById('intelligenceInput').value) || 3;
+    const coolPoints = parseInt(document.getElementById('coolInput').value) || 3;
+    
+    // Check if combined stats exceed 81 and calculate required level
+    const totalStats = bodyPoints + reflexesPoints + technicalPoints + intelligencePoints + coolPoints;
+    const statsWarning = document.getElementById('statsWarning');
+    
+    // Starting at level 1 with 22 stats (7 points already spent from base 15)
+    // You get 1 stat point per level after level 1
+    // Formula: at level 1 you have 22 stats
+    // Each level after gives +1 stat point
+    // So: level = 1 + (totalStats - 22)
+    const level1Stats = 22;
+    const requiredLevel = Math.max(1, 1 + (totalStats - level1Stats));
+    
+    if (requiredLevel > 60) {
+        statsWarning.textContent = `Level required: ${requiredLevel} (EXCEEDS MAX LEVEL 60!)`;
+        statsWarning.className = 'stats-warning over-limit';
+    } else {
+        statsWarning.textContent = `Level required: ${requiredLevel}`;
+        statsWarning.className = 'stats-warning valid';
+    }
+    
+    // Calculate R.Punk bonus (4 capacity for each stat over 9)
+    let rPunkBonus = 0;
+    if (bodyPoints >= 9) rPunkBonus += 4;
+    if (reflexesPoints >= 9) rPunkBonus += 4;
+    if (technicalPoints >= 9) rPunkBonus += 4;
+    if (intelligencePoints >= 9) rPunkBonus += 4;
+    if (coolPoints >= 9) rPunkBonus += 4;
+    
+    // Add RAM from Intelligence (1 RAM per 4 points)
+    totalRAM += Math.floor(intelligencePoints / 4);
+    
+    // Add RAM from perks
+    if (ramPerk1Enabled) totalRAM += 1;
+    if (ramPerk2Enabled) totalRAM += 1;
+    if (ramPerk3Enabled) totalRAM += 1;
+    if (ramPerk4Enabled) totalRAM += 1;
+    
+    // Find all slots with installed cyberware
+    document.querySelectorAll('.slotL, .slotR, .slotL2, .slotR2').forEach(slot => {
+        const costData = slot.dataset.cost;
+        const armorData = slot.dataset.armor;
+        const category = slot.dataset.category;
+		const ramData = slot.dataset.ram;
+        
+        // Check for Chrome Compressor
+        const content = slot.querySelector('.slot-content');
+        if (content) {
+            const name = content.querySelector('div').textContent;
+            if (name === 'Chrome Compressor') {
+                hasChromeCompressor = true;
+            }
+        }
+        
+        if (costData) {
+            let cost = parseInt(costData);
+            
+            // Apply 20% discount to Skeleton and Integumentary System if checkbox is enabled
+            if (discountEnabled && (category === 'SKELETON' || category === 'INTEGUMENTARY_SYSTEM')) {
+                cost = Math.floor(cost * 0.8); // 20% discount
+            }
+            
+            totalCost += cost;
+        }
+        if (armorData) {
+            totalArmor += parseInt(armorData);
+        }
+		
+		if (ramData) {
+            totalRAM += parseInt(ramData);
+        }
+    });
+    
+    // Calculate max capacity
+    let maxCapacity = 21; // Base max capacity
+    if (boostEnabled) maxCapacity += 50;
+    if (hasChromeCompressor) maxCapacity += 70;
+    if (engineer1Enabled) maxCapacity += 5;
+    if (engineer2Enabled) maxCapacity += 10;
+    if (randomShardsEnabled) maxCapacity += 54;
+    if (cyberjunkieEnabled) maxCapacity += 10;
+    if (dogEatDogEnabled) maxCapacity += 4;
+    if (psychoKillerEnabled) maxCapacity += 6;
+    maxCapacity += level * 3; // Level bonus
+    maxCapacity += rPunkBonus; // R.Punk bonus
+    
+    // Update bar1 display (Cost)
+    const costText = document.getElementById('costText');
+    const costFill = document.getElementById('costFill');
+    costText.textContent = `Capacity: ${totalCost}/${maxCapacity}`;
+    
+    // Calculate fill percentage based on dynamic max capacity
+    const costPercent = Math.min((totalCost / maxCapacity) * 100, 100);
+    costFill.style.height = `${costPercent}%`;
+    
+    // Update bar2 display (Armor)
+    const armorText = document.getElementById('armorText');
+    const armorFill = document.getElementById('armorFill');
+    armorText.textContent = `Armor: ${totalArmor}`;
+	
+	// Update bar3 display (RAM)
+	const ramText = document.getElementById('ramText');
+	const ramFill = document.getElementById('ramFill');
+
+	// Optional: set a max RAM for visual scaling
+	const maxRAM = 60; // adjust if you want higher decks later
+
+	ramText.textContent = `RAM: ${totalRAM}`;
+
+	const ramPercent = Math.min((totalRAM / maxRAM) * 100, 100);
+	ramFill.style.height = `${ramPercent}%`;
+    
+    // Calculate fill percentage (max armor 1500 for full bar)
+    const armorPercent = Math.min((totalArmor / 1500) * 100, 100);
+    armorFill.style.height = `${armorPercent}%`;
+}
+
+// Add event listener to checkboxes and inputs
+document.getElementById('discountCheckbox').addEventListener('change', updateStats);
+document.getElementById('boostCheckbox').addEventListener('change', updateStats);
+document.getElementById('engineerCheckbox1').addEventListener('change', updateStats);
+document.getElementById('engineerCheckbox2').addEventListener('change', updateStats);
+document.getElementById('randomShardsCheckbox').addEventListener('change', updateStats);
+document.getElementById('cyberjunkieCheckbox').addEventListener('change', updateStats);
+document.getElementById('dogEatDogCheckbox').addEventListener('change', updateStats);
+document.getElementById('psychoKillerCheckbox').addEventListener('change', updateStats);
+document.getElementById('ramPerk1Checkbox').addEventListener('change', updateStats);
+document.getElementById('ramPerk2Checkbox').addEventListener('change', updateStats);
+document.getElementById('ramPerk3Checkbox').addEventListener('change', updateStats);
+document.getElementById('ramPerk4Checkbox').addEventListener('change', updateStats);
+document.getElementById('levelInput').addEventListener('input', updateStats);
+document.getElementById('bodyInput').addEventListener('input', updateStats);
+document.getElementById('reflexesInput').addEventListener('input', updateStats);
+document.getElementById('technicalInput').addEventListener('input', updateStats);
+document.getElementById('intelligenceInput').addEventListener('input', updateStats);
+document.getElementById('coolInput').addEventListener('input', updateStats);
+
+document.querySelectorAll('.slotL, .slotR, .slotL2, .slotR2').forEach(slot => {
+    // Left click to open menu
+    slot.addEventListener('click', e => {
+        e.stopPropagation();
+
+        // Remove existing menus
+        document.querySelectorAll('.cyberware-menu').forEach(m => m.remove());
+
+        const category = slot.dataset.category;
+        const items = cyberwareData[category] || [];
+
+        if (!items.length) return;
+
+        const menu = document.createElement('div');
+        menu.className = 'cyberware-menu';
+
+        // Prevent menu clicks from closing it
+        menu.addEventListener('click', e => e.stopPropagation());
+
+        items.forEach(item => {
+            const entry = document.createElement('div');
+			entry.innerHTML = `
+				<img src="${item.icon}" onerror="this.style.display='none'">
+				<span>${item.name} (Cost: ${item.cost}, Armor: ${item.armor})</span>
+			`;
+            
+            // Add click handler to insert item into slot
+            entry.addEventListener('click', () => {
+                // Remove any existing content in the slot
+                const existingContent = slot.querySelector('.slot-content');
+                if (existingContent) {
+                    existingContent.remove();
+                }
+                
+                // Store the cost and armor in the slot's dataset
+                slot.dataset.cost = item.cost;
+                slot.dataset.armor = item.armor;
+                slot.dataset.ram = item.ram;
+                // Create and add new content with image icon
+                const content = document.createElement('div');
+                content.className = 'slot-content';
+                content.innerHTML = `
+    <div class="slot-icon">
+        <img src="${item.icon}" onerror="this.style.display='none'">
+    </div>
+    <div class="slot-label">${item.name}</div>
+`;
+                content.style.cssText = 'color: #00ffff; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; position: relative;';
+                slot.appendChild(content);
+                
+                // Change background image based on slot type
+                if (slot.classList.contains('slotL2') || slot.classList.contains('slotR2')) {
+                    slot.style.backgroundImage = 'url("slot4.png")';
+                } else {
+                    slot.style.backgroundImage = 'url("slot3.png")';
+                }
+                
+                // Update stats
+                updateStats();
+                
+                // Close the menu
+                menu.remove();
+            });
+            
+            menu.appendChild(entry);
+        });
+
+        document.body.appendChild(menu);
+		menu.style.display = 'block';
+
+		// Measure
+		const menuRect = menu.getBoundingClientRect();
+		const slotRect = slot.getBoundingClientRect();
+		const viewportWidth = window.innerWidth;
+		const viewportHeight = window.innerHeight;
+
+		let top, left;
+
+		// ─── Vertical positioning ───
+		if (slotRect.bottom + menuRect.height < viewportHeight) {
+			top = slotRect.bottom + 8; // open below
+		} else {
+			top = slotRect.top - menuRect.height - 8; // open above
+		}
+
+		// Clamp vertically
+		top = Math.max(8, Math.min(top, viewportHeight - menuRect.height - 8));
+
+		// ─── Horizontal positioning ───
+		if (slotRect.left + menuRect.width < viewportWidth) {
+			left = slotRect.left; // align left edge
+		} else {
+			left = slotRect.right - menuRect.width; // open left
+		}
+
+		// Clamp horizontally
+		left = Math.max(8, Math.min(left, viewportWidth - menuRect.width - 8));
+
+		// Apply
+		menu.style.top = `${top}px`;
+		menu.style.left = `${left}px`;
+		
+    });
+    
+    // Right click to remove cyberware
+    slot.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Check if slot has cyberware installed
+        const existingContent = slot.querySelector('.slot-content');
+        if (existingContent) {
+            // Remove the cyberware
+            existingContent.remove();
+            
+            // Reset background image based on slot type
+            if (slot.classList.contains('slotL2') || slot.classList.contains('slotR2')) {
+                slot.style.backgroundImage = 'url("slot_m.png")';
+            } else {
+                slot.style.backgroundImage = 'url("slot.png")';
+            }
+            
+            // Clear the stored data
+            delete slot.dataset.cost;
+            delete slot.dataset.armor;
+			delete slot.dataset.ram;
+            
+            // Update stats
+            updateStats();
+        }
+    });
+});
+
+// Close only when clicking outside slots
+document.addEventListener('click', e => {
+    if (!e.target.closest('.slotL, .slotR, .slotL2, .slotR2')) {
+        document.querySelectorAll('.cyberware-menu').forEach(m => m.remove());
+    }
+});
+
+// Initialize the stats display
+updateStats();
+
+// Export build functionality
+
+document.getElementById('exportBtn').addEventListener('click', () => {
+	
+	const buildName = document.getElementById('buildNameInput').value || 'cyberware-build';
+	
+    const build = {
+		name: buildName,
+        edgerunner: document.getElementById('discountCheckbox').checked,
+        boostCapacity: document.getElementById('boostCheckbox').checked,
+        engineer1: document.getElementById('engineerCheckbox1').checked,
+        engineer2: document.getElementById('engineerCheckbox2').checked,
+        randomShards: document.getElementById('randomShardsCheckbox').checked,
+        cyberjunkie: document.getElementById('cyberjunkieCheckbox').checked,
+        dogEatDog: document.getElementById('dogEatDogCheckbox').checked,
+        psychoKiller: document.getElementById('psychoKillerCheckbox').checked,
+        ramPerk1: document.getElementById('ramPerk1Checkbox').checked,
+        ramPerk2: document.getElementById('ramPerk2Checkbox').checked,
+        ramPerk3: document.getElementById('ramPerk3Checkbox').checked,
+        ramPerk4: document.getElementById('ramPerk4Checkbox').checked,
+        level: parseInt(document.getElementById('levelInput').value) || 0,
+        stats: {
+            body: parseInt(document.getElementById('bodyInput').value) || 3,
+            reflexes: parseInt(document.getElementById('reflexesInput').value) || 3,
+            technical: parseInt(document.getElementById('technicalInput').value) || 3,
+            intelligence: parseInt(document.getElementById('intelligenceInput').value) || 3,
+            cool: parseInt(document.getElementById('coolInput').value) || 3
+        },
+		toggles: {
+			skeleton: document.getElementById('skeletonToggle').checked,
+			hand: document.getElementById('handToggle').checked,
+			modded: document.getElementById('moddedSlotsToggle').checked
+		},
+        slots: {}
+    };
+    
+    // Collect all installed cyberware
+    document.querySelectorAll('.slotL, .slotR, .slotL2, .slotR2').forEach((slot, index) => {
+        const content = slot.querySelector('.slot-content');
+        if (content && slot.dataset.cost) {
+            const slotId = `slot_${index}`;
+            build.slots[slotId] = {
+                category: slot.dataset.category,
+                cost: slot.dataset.cost,
+                armor: slot.dataset.armor,
+				ram: slot.dataset.ram,
+                name: content.querySelector('.slot-label')?.textContent || '',
+                className: slot.className
+            };
+        }
+    });
+    
+    // Create JSON and download
+    const dataStr = JSON.stringify(build, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${buildName}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+});
+
+// Import build functionality
+document.getElementById('importBtn').addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+    
+    input.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const build = JSON.parse(event.target.result);
+                
+                // Clear all existing cyberware
+                document.querySelectorAll('.slotL, .slotR, .slotL2, .slotR2').forEach(slot => {
+                    const content = slot.querySelector('.slot-content');
+                    if (content) content.remove();
+                    // Reset background image based on slot type
+                    if (slot.classList.contains('slotL2') || slot.classList.contains('slotR2')) {
+                        slot.style.backgroundImage = 'url("slot_m.png")';
+                    } else {
+                        slot.style.backgroundImage = 'url("slot.png")';
+                    }
+                    delete slot.dataset.cost;
+                    delete slot.dataset.armor;
+					delete slot.dataset.ram;
+                });
+                
+                // Set edgerunner checkbox
+                if (build.edgerunner !== undefined) {
+                    document.getElementById('discountCheckbox').checked = build.edgerunner;
+                }
+                
+                // Set boost capacity checkbox
+                if (build.boostCapacity !== undefined) {
+                    document.getElementById('boostCheckbox').checked = build.boostCapacity;
+                }
+                
+                // Set new perks
+                if (build.engineer1 !== undefined) {
+                    document.getElementById('engineerCheckbox1').checked = build.engineer1;
+                }
+                if (build.engineer2 !== undefined) {
+                    document.getElementById('engineerCheckbox2').checked = build.engineer2;
+                }
+                if (build.randomShards !== undefined) {
+                    document.getElementById('randomShardsCheckbox').checked = build.randomShards;
+                }
+                if (build.cyberjunkie !== undefined) {
+                    document.getElementById('cyberjunkieCheckbox').checked = build.cyberjunkie;
+                }
+                if (build.dogEatDog !== undefined) {
+                    document.getElementById('dogEatDogCheckbox').checked = build.dogEatDog;
+                }
+                if (build.psychoKiller !== undefined) {
+                    document.getElementById('psychoKillerCheckbox').checked = build.psychoKiller;
+                }
+                if (build.ramPerk1 !== undefined) {
+                    document.getElementById('ramPerk1Checkbox').checked = build.ramPerk1;
+                }
+                if (build.ramPerk2 !== undefined) {
+                    document.getElementById('ramPerk2Checkbox').checked = build.ramPerk2;
+                }
+                if (build.ramPerk3 !== undefined) {
+                    document.getElementById('ramPerk3Checkbox').checked = build.ramPerk3;
+                }
+                if (build.ramPerk4 !== undefined) {
+                    document.getElementById('ramPerk4Checkbox').checked = build.ramPerk4;
+                }
+                
+                // Set level
+                if (build.level !== undefined) {
+                    document.getElementById('levelInput').value = build.level;
+                }
+				
+				if (build.toggles) {
+					document.getElementById('skeletonToggle').checked = !!build.toggles.skeleton;
+					document.getElementById('handToggle').checked = !!build.toggles.hand;
+					document.getElementById('moddedSlotsToggle').checked = !!build.toggles.modded;
+				}
+                
+                // Set base stats
+                if (build.stats) {
+                    if (build.stats.body !== undefined) {
+                        document.getElementById('bodyInput').value = build.stats.body;
+                    }
+                    if (build.stats.reflexes !== undefined) {
+                        document.getElementById('reflexesInput').value = build.stats.reflexes;
+                    }
+                    if (build.stats.technical !== undefined) {
+                        document.getElementById('technicalInput').value = build.stats.technical;
+                    }
+                    if (build.stats.intelligence !== undefined) {
+                        document.getElementById('intelligenceInput').value = build.stats.intelligence;
+                    }
+                    if (build.stats.cool !== undefined) {
+                        document.getElementById('coolInput').value = build.stats.cool;
+                    }
+                }
+				
+				if (build.name) {
+    document.getElementById('buildNameInput').value = build.name;
+}
+                
+                // Restore cyberware
+                const allSlots = Array.from(document.querySelectorAll('.slotL, .slotR, .slotL2, .slotR2'));
+                Object.entries(build.slots).forEach(([slotId, data]) => {
+                    const index = parseInt(slotId.split('_')[1]);
+                    const slot = allSlots[index];
+                    
+                    if (slot && slot.dataset.category === data.category) {
+                        slot.dataset.cost = data.cost;
+                        slot.dataset.armor = data.armor;
+						slot.dataset.ram = data.ram
+                        
+                        // Find the item in cyberwareData to get icon
+                        const items = cyberwareData[data.category] || [];
+                        const item = items.find(i => i.name === data.name);
+                        
+                        if (item) {
+                            const content = document.createElement('div');
+                            content.className = 'slot-content';
+                            content.innerHTML = `
+								<div class="slot-icon">
+									<img src="${item.icon}" onerror="this.style.display='none'">
+								</div>
+								<div class="slot-label">${item.name}</div>
+							`;
+                            content.style.cssText = 'color: #00ffff; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; position: relative;';
+                            slot.appendChild(content);
+                            
+                            // Change background image based on slot type
+                            if (slot.classList.contains('slotL2') || slot.classList.contains('slotR2')) {
+                                slot.style.backgroundImage = 'url("slot4.png")';
+                            } else {
+                                slot.style.backgroundImage = 'url("slot3.png")';
+                            }
+                        }
+                    }
+                });
+                
+                updateStats();
+                alert('Build imported successfully!');
+				
+				document.getElementById('skeletonToggle').dispatchEvent(new Event('change'));
+				document.getElementById('handToggle').dispatchEvent(new Event('change'));
+				document.getElementById('moddedSlotsToggle').dispatchEvent(new Event('change'));
+            } catch (error) {
+                alert('Error importing build: ' + error.message);
+            }
+        };
+        reader.readAsText(file);
+    });
+    
+    input.click();
+});
+
+function clearSlot(slot) {
+    const content = slot.querySelector('.slot-content');
+    if (content) content.remove();
+
+    delete slot.dataset.cost;
+    delete slot.dataset.armor;
+    delete slot.dataset.ram;
+
+    if (slot.classList.contains('slotL2') || slot.classList.contains('slotR2')) {
+        slot.style.backgroundImage = 'url("slot_m.png")';
+    } else {
+        slot.style.backgroundImage = 'url("slot.png")';
+    }
+}
+
+document.getElementById('skeletonToggle').addEventListener('change', (e) => {
+    const slot = document.querySelector('.slotL[data-category="SKELETON"]');
+
+    if (!slot) return;
+
+    if (e.target.checked) {
+        slot.style.display = 'flex';
+    } else {
+        clearSlot(slot);          // 👈 empty it
+        slot.style.display = 'none';
+    }
+
+    updateStats();
+});
+
+document.getElementById('handToggle').addEventListener('change', (e) => {
+    const handSlots = document.querySelectorAll('.slotR[data-category="HANDS"]');
+    const slot = handSlots[1];
+
+    if (!slot) return;
+
+    if (e.target.checked) {
+        slot.style.display = 'flex';
+    } else {
+        clearSlot(slot);          // 👈 empty it
+        slot.style.display = 'none';
+    }
+
+    updateStats();
+});
+
+document.getElementById('moddedSlotsToggle').addEventListener('change', (e) => {
+    const show = e.target.checked;
+
+    document.querySelectorAll('.slotL2, .slotR2').forEach(slot => {
+        if (!show) {
+            clearSlot(slot);      // 👈 wipe content
+            slot.style.display = 'none';
+        } else {
+            slot.style.display = 'block';
+        }
+    });
+
+    document.querySelectorAll('.SlotStripL, .SlotStripR').forEach(strip => {
+        strip.classList.toggle('compact', !show);
+    });
+
+    updateStats();
+});
+
+// Toggle functionality for hiding/showing slots
+
+// Skeleton Toggle - Hide 3rd skeleton slot from the right (which is the 4th from left, index 3)
+document.getElementById('skeletonToggle').addEventListener('change', (e) => {
+    const skeletonSlots = document.querySelectorAll('.slotL[data-category="SKELETON"]');
+    // 3rd from right = index 0 (since there are 3 regular skeleton slots: indices 0, 1, 2)
+    if (skeletonSlots[0]) {
+        skeletonSlots[0].style.display = e.target.checked ? 'flex' : 'none';
+    }
+});
+
+// Hand Toggle - Hide 2nd hand slot from the left (index 1)
+document.getElementById('handToggle').addEventListener('change', (e) => {
+    const handSlots = document.querySelectorAll('.slotR[data-category="HANDS"]');
+    if (handSlots[1]) {
+        handSlots[1].style.display = e.target.checked ? 'flex' : 'none';
+    }
+});
+
+document.getElementById('skeletonToggle').dispatchEvent(new Event('change'));
+document.getElementById('handToggle').dispatchEvent(new Event('change'));
+
+// Modded Slots Toggle - Hide/Show all L2 and R2 slots
+const toggle = document.getElementById("moddedSlotsToggle");
+
+toggle.addEventListener("change", e => {
+    const show = e.target.checked;
+
+    document.querySelectorAll(".slotL2, .slotR2").forEach(slot => {
+        slot.style.display = show ? "block" : "none";
+    });
+
+    document.querySelectorAll(".SlotStripL, .SlotStripR").forEach(strip => {
+        strip.classList.toggle("compact", !show);
+    });
+});
+
+/* ensure correct state on load */
+toggle.dispatchEvent(new Event("change"));
+
+// Placeholder Toggle - Does nothing for now
+document.getElementById('placeholderToggle').addEventListener('change', (e) => {
+    // Placeholder functionality
+});
+
+</script>
+	
+</body>
