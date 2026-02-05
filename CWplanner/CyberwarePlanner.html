@@ -609,7 +609,7 @@
 					</div>
 					<div class="boost-checkbox">
 						<input type="checkbox" id="boostCheckbox">
-						<label for="boostCheckbox">Edge Runner (+50 Max Capacity, -25% Max HP)</label>
+						<label for="boostCheckbox" id="edgeRunnerLabel">Edge Runner (+50 Max Capacity)</label>
 					</div>
 					<div class="perk-item">
 						<input type="checkbox" id="engineerCheckbox1">
@@ -873,7 +873,7 @@ const cyberwareData = {
 		{name: "Painducer", cost:30 , armor:138 , ram:0, icon: "BloodDepleter.webp"},
 		{name: "Peripheral Inverse", cost:30 , armor:36 , ram:0, icon: "ProximityReducer.webp"},
 		{name: "Pain Editor", cost:35 , armor:108 , ram:0, icon: "PainReductor.webp"},
-		{name: "Chitin", cost:50 , armor:200 , icon: "Chiton.webp"}
+		{name: "Chitin", cost:50 , armor:200, ram:0, icon: "Chiton.webp"}
     ],
     FACE: [
         {name: "Basic Kiroshi Optics", cost:1 , armor:0 , ram:0, icon: "KiroshiOptics.webp"},
@@ -1058,6 +1058,34 @@ function updateStats() {
     // Calculate fill percentage (max armor 1500 for full bar)
     const armorPercent = Math.min((totalArmor / 1500) * 100, 100);
     armorFill.style.height = `${armorPercent}%`;
+	
+	let edgeRunnerHpPenalty = 0;
+
+	if (boostEnabled) {
+		const EDGE_RUNNER_BONUS = 50;
+
+		// Capacity used specifically from the Edge Runner bonus
+		const usedEdgeCapacity = Math.max(
+			0,
+			totalCost - (maxCapacity - EDGE_RUNNER_BONUS)
+		);
+
+		// 0.5% HP per capacity point used (max 25%)
+		edgeRunnerHpPenalty = Math.min(
+			25,
+			Math.round(usedEdgeCapacity * 0.5)
+		);
+	}
+	
+	const edgeRunnerLabel = document.getElementById('edgeRunnerLabel');
+
+	if (boostEnabled) {
+		edgeRunnerLabel.textContent =
+			`Edge Runner (+50 Max Capacity, -${edgeRunnerHpPenalty}% Max HP)`;
+	} else {
+		edgeRunnerLabel.textContent =
+			'Edge Runner (+50 Max Capacity)';
+	}
 }
 
 // Add event listener to checkboxes and inputs
