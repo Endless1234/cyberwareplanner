@@ -1,0 +1,583 @@
+body {
+		height:100%;
+		background: #b32020;
+		background: linear-gradient(180deg,rgba(179, 32, 32, 1) 0%, rgba(128, 23, 23, 1) 48%, rgba(0, 0, 0, 1) 100%);
+	}
+	
+	html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+	
+	#wrapper{
+		height:auto;
+		width:auto;
+	}
+	
+	#cyberware{
+		width:1760px;
+		min-height:1020px;
+		height:auto;
+		margin:auto;
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	.leftCol{
+		width:660px;
+		display: flex;
+		flex-direction: column;
+	}
+	
+	.midCol{
+		height:1000px;
+		width:400px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 5px;
+		padding-top: 0px;
+	}
+	
+	.bars-container{
+		display: flex;
+		gap: 5px;
+		margin-top: 15px;
+	}
+	
+	.perks-container{
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 5px;
+		margin-top: 10px;
+	}
+	
+	.stats-perks-row{
+		display: flex;
+		gap: 5px;
+
+		align-items: flex-center; /* 👈 THIS is the key */
+	}
+	
+	.toggle-perks-container{
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		flex: 1;
+	}
+	
+	.toggle-perk-item{
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background-color: #333;
+		padding: 10px;
+		border-radius: 5px;
+		color: white;
+		font-size: 12px;
+	}
+	
+	.toggle-perk-item input[type="checkbox"]{
+		cursor: pointer;
+		width: 20px;
+		height: 20px;
+	}
+	
+	.bar1{
+	height:100px;
+	width:120px;
+	display: flex;
+	flex-direction: column;
+	background-color:#C2C229;
+	justify-content: flex-start;
+	margin:auto;
+	text-align:center;
+	position: relative;
+	overflow: hidden;
+	}
+	
+	#costFill{
+	background-color:#FFFF00;
+	}
+	
+	.bar2{
+	height:100px;
+	width:120px;
+	display: flex;
+	flex-direction: column;
+	background-color:#610101;
+	justify-content: flex-start;
+	margin:auto;
+	text-align:center;
+	position: relative;
+	overflow: hidden;
+	}
+	
+	#hpFill{
+    background-color: #FF0505; /* bright cyber red */
+	}
+	
+	.bar3{
+	height:100px;
+	width:120px;
+	display: flex;
+	flex-direction: column;
+	background-color:#11719E;
+	justify-content: flex-start;
+	margin:auto;
+	text-align:center;
+	position: relative;
+	overflow: hidden;
+	}
+	
+	#ramFill{
+	background-color:#0CB7F7;
+	}
+	
+	.bar-fill{
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background-color: rgba(0, 255, 255, 0.3);
+		transition: height 0.3s ease;
+	}
+	
+	.bar-text{
+		position: relative;
+		z-index: 1;
+		color:#FFF;
+		text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+		font-weight: bold;
+		padding: 5px;
+	}
+	
+	.discount-checkbox{
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background-color: #BAB400; 
+		padding: 10px;
+		border-radius: 5px;
+		color: white;
+		font-size: 12px;
+	}
+	
+	.discount-checkbox input[type="checkbox"]{
+		cursor: pointer;
+		width: 20px;
+		height: 20px;
+	}
+	
+	.boost-checkbox{
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background-color: #BAB400;
+		padding: 10px;
+		border-radius: 5px;
+		color: white;
+		font-size: 12px;
+	}
+	
+	.boost-checkbox input[type="checkbox"]{
+		cursor: pointer;
+		width: 20px;
+		height: 20px;
+	}
+	
+	.perk-item{
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background-color: #333;
+		padding: 10px;
+		border-radius: 5px;
+		color: white;
+		font-size: 12px;
+	}
+	
+	.perk-item input[type="checkbox"]{
+		cursor: pointer;
+		width: 20px;
+		height: 20px;
+	}
+	
+	.level-selector{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 12px;
+	height:50px;
+    width: 100%;      /* 👈 match stats container width */
+    box-sizing: border-box;
+	}
+	
+	.level-selector input[type="number"]{
+		width: 60px;
+		padding: 5px;
+		border-radius: 3px;
+		border: 1px solid #00ffff;
+		background-color: #222;
+		color: white;
+		text-align: center;
+	}
+	
+	.stats-container{
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		background-color: #333;
+		padding: 10px;
+		border-radius: 5px;
+		color: white;
+		font-size: 12px;
+		align-items: flex-start;
+		flex: 1;
+	}
+	
+	.stats-warning{
+		width: 100%;
+		text-align: center;
+		font-weight: bold;
+		margin-top: 5px;
+	}
+	
+	.stats-warning.over-limit{
+		color: #ff4444;
+	}
+	
+	.stats-warning.valid{
+		color: #44ff44;
+	}
+	
+	.stat-item{
+		display: flex;
+		align-items: center;
+		gap: 1px;
+	}
+	
+	.stat-item label{
+		min-width: 100px;
+	}
+	
+	.stat-item input[type="number"]{
+		width: 50px;
+		padding: 3px;
+		border-radius: 3px;
+		border: 1px solid #00ffff;
+		background-color: #222;
+		color: white;
+		text-align: center;
+	}
+	
+	.build-buttons{
+		display: flex;
+		justify-content: center;
+		gap: 10px;
+		margin-top: 10px;
+	}
+	
+	.build-buttons button{
+		padding: 10px 20px;
+		background-color: #00ffff;
+		color: black;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		font-weight: bold;
+		font-size: 12px;
+	}
+	
+	.build-buttons button:hover{
+		background-color: #00cccc;
+	}
+
+	.rightCol{
+		width:660px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* LEFT column: row left → right, anchored right */
+.SlotStripL{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;   /* anchor to right side */
+    gap: 10px;
+	height:120px;
+}
+
+.SlotStripR{
+    display: flex;
+    flex-direction: row;          /* 👈 natural order */
+    justify-content: flex-start;  /* hug the text */
+    gap: 10px;
+	height:120px;
+	}
+	
+	.slotL{
+		height:100px;
+		width:100px;
+		margin:5px;
+		flex-shrink: 0;
+		background-image:url("../images/slot.png");
+	}
+	
+	.slotL2{
+		height:100px;
+		width:100px;
+		margin:5px;
+		background-color:grey;
+		flex-shrink: 0;
+		background-image:url("../images/slot_m.png");
+	}
+	
+	.slotR{
+		height:100px;
+		width:100px;
+		margin:5px;
+		flex-shrink: 0;
+		background-image:url("../images/slot.png");
+	}
+	
+	.slotR2{
+		height:100px;
+		width:100px;
+		margin:5px;
+		background-color:grey;
+		flex-shrink: 0;
+		background-image:url("../images/slot_m.png");
+	}
+	
+	.textL{
+		width:300px;
+		height:20px;
+		margin-top:35px;
+		text-align:center;
+		align-self: flex-end;
+		color:white;
+		text-align: right; 
+		margin-right:5px;
+		text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+		font-weight: bold;
+	}
+	
+	.textR{
+		width:300px;
+		height:20px;
+		margin-top:35px;
+		text-align:center;
+		align-self: flex-start;
+		color:white;
+		text-align: left; 
+		margin-left:5px;
+		text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+		font-weight: bold;
+	}
+	
+	.slotL, .slotR, .slotL2, .slotR2{
+		cursor:pointer;
+		position:relative;
+	}
+
+	.slotL:hover, .slotR:hover, .slotL2:hover, .slotR2:hover{
+		outline:2px solid #00ffff;
+	}
+
+	.cyberware-menu{
+		position:fixed;
+		left:0;
+		width:260px;
+		background:#111;
+		border:2px solid #00ffff;
+		padding:10px;
+		z-index:999;
+		display:none;
+	}
+
+	.cyberware-menu div{
+		padding:6px;
+		color:#fff;
+		font-size:14px;
+	}
+
+	.cyberware-menu div:hover{
+		background:#00ffff;
+		color:black;
+	}
+	
+	.build-name{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    max-width: 380px;
+    margin-top: 10px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-size: 12px;
+	text-align:center;
+	font-weight:bold;
+	}
+
+	.build-name input{
+		padding: 6px;
+		border-radius: 3px;
+		border: 1px solid #00ffff;
+		background-color: #222;
+		color: white;
+	}
+	
+	a:link {
+	  color: white;
+	  background-color: transparent;
+	  text-decoration: none;
+	}
+
+	a:visited {
+	  color: white;
+	  background-color: transparent;
+	  text-decoration: none;
+	}
+
+	a:hover {
+	  color: yellow;
+	  background-color: transparent;
+	  text-decoration: underline;
+	}
+
+	a:active {
+	  color: yellow;
+	  background-color: transparent;
+	  text-decoration: underline;
+	}
+	
+	.cyberware-menu div{
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 6px;
+		color: #fff;
+		font-size: 13px;
+		cursor: pointer;
+	}
+
+	.cyberware-menu img{
+		width: 24px;          /* reduced size */
+		height: 24px;
+		object-fit: contain;
+		flex-shrink: 0;
+	}
+	
+.slot-content{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
+
+/* ICON — perfectly centered in the slot */
+.slot-icon{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slot-icon img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* LABEL — exactly 10px below the slot */
+.slot-label{
+    position: absolute;
+    top: 100%;
+    margin-top: 5px;     /* 👈 exact spacing */
+    font-size: 10px;
+    font-weight: bold;
+    color: #00ffff;
+    text-align: center;
+    width: 90px;
+    line-height: 1.1;
+    text-shadow: 1px 1px 2px black;
+    pointer-events: none;
+	background: rgba(0,0,0,0.6);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.slot-filled{
+    background-image: url("../images/slot3.png") !important;
+}
+
+/* ───────── MODDED SLOTS HIDDEN (COMPACT) ───────── */
+
+.SlotStripL.compact{
+    flex-direction: row;
+    justify-content: flex-end;   /* collapse inward */
+}
+
+.SlotStripR.compact{
+    justify-content: flex-start;  /* still hug text */
+}
+
+.level-perks-column{
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	align-items: stretch; /* 👈 not center */
+	max-width:195px;
+}
+
+.discount-checkbox,
+.boost-checkbox,
+.perk-item,
+.toggle-perk-item{
+	display: flex;
+	align-items: center;
+	gap: 5px;
+
+	height: 36px;              /* 👈 thin + consistent */
+	padding: 0 10px;
+
+	border-radius: 5px;
+
+	color: white;
+	font-size: 12px;
+	line-height: 1;
+
+	box-sizing: border-box;
+}
+
+.discount-checkbox input[type="checkbox"],
+.boost-checkbox input[type="checkbox"],
+.perk-item input[type="checkbox"],
+.toggle-perk-item input[type="checkbox"]{
+	width: 16px;
+	height: 16px;
+	margin: 0;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+
+.perks-container{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 5px;          /* 👈 tighter vertical rhythm */
+	margin-top: 10px;
+}
